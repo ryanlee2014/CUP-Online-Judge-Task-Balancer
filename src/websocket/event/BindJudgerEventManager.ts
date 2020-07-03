@@ -20,6 +20,9 @@ class BindJudgerEventManager extends BindTypeEventManager {
   bindStatusEvent(socket: ISocket) {
     socket.on('status', (payload) => {
       Judger.setStatus(socket.socketId, payload);
+      Submitter.runForAll((submitterSocket) => {
+        submitterSocket.emit('status', payload);
+      });
     });
   }
 
@@ -34,7 +37,7 @@ class BindJudgerEventManager extends BindTypeEventManager {
   bindRejectEvent(socket: ISocket) {
     socket.on('reject_judge', (payload) => {
       const solutionId: string = payload.solutionId;
-      Submitter.getSocket(solutionId).emit(payload);
+      Submitter.getSocket(solutionId).emit("reject_judge", payload);
     });
   }
 
@@ -42,7 +45,7 @@ class BindJudgerEventManager extends BindTypeEventManager {
     socket.on('judger', (payload) => {
       const solutionId = payload.solution_id;
       const finish = payload.finish;
-      Submitter.getSocket(solutionId).emit(payload);
+      Submitter.getSocket(solutionId).emit('judger', payload);
       if (finish) {
         Submitter.removeSocket(solutionId);
       }
