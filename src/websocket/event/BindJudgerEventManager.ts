@@ -48,7 +48,9 @@ class BindJudgerEventManager extends BindTypeEventManager {
       const finish = payload.finish;
       Submitter.getSocket(solutionId).emit('judger', payload);
       if (finish) {
-        Submitter.removeSocket(solutionId);
+        setTimeout(() => {
+          Submitter.removeSocket(solutionId);
+        }, 1000);
       }
     });
   }
