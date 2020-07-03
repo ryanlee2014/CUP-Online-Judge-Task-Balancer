@@ -3,6 +3,16 @@ import { Container } from './common/Container';
 class Judger extends Container {
   status = {};
 
+  constructor() {
+    super();
+    setInterval(() => {
+      this.runForAll((judgerSocket) => {
+        judgerSocket.emit("status", {});
+      });
+    }, 10);
+
+  }
+
   setStatus(socketId: number | string, status: any) {
     this.status[socketId] = status;
   }

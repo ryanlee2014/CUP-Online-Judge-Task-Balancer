@@ -20,6 +20,12 @@ export class Container {
       this.socketSetArray = Object.values(this.socketSet);
     }
   }
+
+  runForAll(cb: (socket: ISocket) => any) {
+    this.socketSetArray.forEach(socket => {
+      cb(socket);
+    })
+  }
 }
 
 export default new Container();

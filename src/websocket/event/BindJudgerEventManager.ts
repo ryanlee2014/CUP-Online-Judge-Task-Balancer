@@ -21,9 +21,6 @@ class BindJudgerEventManager extends BindTypeEventManager {
   bindStatusEvent(socket: ISocket) {
     socket.on('status', (payload) => {
       Judger.setStatus(socket.socketId, payload);
-      Submitter.runForAll((submitterSocket) => {
-        submitterSocket.emit('status', payload);
-      });
     });
   }
 
