@@ -1,7 +1,9 @@
 import { Socket } from 'socket.io';
 import ConcurrentLock from '../../lib/decorator/ConcurrentLock';
+import BindSubmitterEventManager from './BindSubmitterEventManager';
+import BindJudgerEventManager from './BindJudgerEventManager';
 
-interface ISocket extends Socket {
+export interface ISocket extends Socket {
   socketId: number
 }
 
@@ -31,13 +33,15 @@ interface IRejectInfo {
   solutionId: number | string
 }
 
+interface TypePayload {
+  type: 'submitter' | 'judger'
+}
+
 class BindSocketEventManager {
 
   id = 0;
 
   socketSet = {};
-
-  distinceSocketSet = {};
 
   constructor() {
 
@@ -51,22 +55,34 @@ class BindSocketEventManager {
 
   public async bindSocket(socket: ISocket) {
     socket.socketId = this.id;
-    this.distinceSocketSet[this.id] = socket;
     await this.incrementId();
+    this.setSocket(socket.socketId, socket);
+    socket.on('type', (payload: TypePayload) => {
+      switch (payload.type) {
+        case 'submitter':
+          BindSubmitterEventManager.bindEvents(socket);
+          break;
+        case 'judger':
+          BindJudgerEventManager.bindEvents(socket);
+          break;
+        default:
+          return;
+      }
+    });
   }
 
-  setSocket(solutionId: string, socket: Socket) {
-    this.socketSet[solutionId] = socket;
+  setSocket(socketId: string | number, socket: Socket) {
+    this.socketSet[socketId] = socket;
   }
 
-  getSocket(solutionId: string): Socket {
-    return this.socketSet[solutionId];
+  getSocket(socketId: string | number): Socket {
+    return this.socketSet[socketId];
   }
 
-  removeSocket(solutionId: string) {
-    if (this.socketSet[solutionId]) {
+  removeSocket(socketId: string | number) {
+    if (this.socketSet[socketId]) {
       setTimeout(() => {
-        delete this.socketSet[solutionId];
+        delete this.socketSet[socketId];
       }, 60000);
     }
   }
