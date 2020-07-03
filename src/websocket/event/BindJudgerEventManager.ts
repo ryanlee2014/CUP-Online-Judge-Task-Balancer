@@ -15,6 +15,7 @@ class BindJudgerEventManager extends BindTypeEventManager {
 
   register(socket: ISocket) {
     Judger.setSocket(socket.socketId, socket);
+    socket.emit("status", {});
   }
 
   bindStatusEvent(socket: ISocket) {

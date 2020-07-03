@@ -1,5 +1,5 @@
 {
-  "name"        : "CUP Online Judge judger daemon service",
+  "name"        : "CUP Online Judge Task Balancer",
   "script"      : "./build/index.js",
   "exec_mode"   : "fork",
   "cwd"         : "./",
