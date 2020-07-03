@@ -29,7 +29,6 @@ class BindJudgerEventManager extends BindTypeEventManager {
 
   bindChangeEvent(socket: ISocket) {
     socket.on('change', (payload) => {
-      Judger.setStatus(socket.socketId, payload);
       Submitter.runForAll((submitterSocket) => {
         submitterSocket.emit('change', payload);
       });
