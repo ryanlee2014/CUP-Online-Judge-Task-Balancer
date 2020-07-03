@@ -15,6 +15,11 @@ class BindSubmitterEventManager extends BindTypeEventManager {
   bindEvents(socket: ISocket) {
     this.bindStatusEvent(socket);
     this.bindSubmissionEvent(socket);
+    this.register(socket);
+  }
+
+  register(socket: ISocket) {
+    socket.emit('status', Judger.getStatus());
   }
 
   bindStatusEvent(socket: ISocket) {
