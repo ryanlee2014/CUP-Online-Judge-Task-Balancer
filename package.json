@@ -5,7 +5,7 @@
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
   "module": "build/module/index.js",
-  "repository": "https://github.com/YOUR_GITHUB_USER_NAME/cup-online-judge-judger-daemon-server",
+  "repository": "https://github.com/ryanlee2014/CUP-Online-Judge-Task-Balancer",
   "license": "MIT",
   "keywords": [],
   "scripts": {
