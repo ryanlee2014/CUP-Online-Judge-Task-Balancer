@@ -9,7 +9,7 @@ class Judger extends Container {
       this.runForAll((judgerSocket) => {
         judgerSocket.emit("status", {});
       });
-    }, 10);
+    }, 10000);
 
   }
 
