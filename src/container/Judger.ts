@@ -17,6 +17,17 @@ class Judger extends Container {
     this.status[socketId] = status;
   }
 
+  removeStatus(socketId: number | string) {
+    if (Object.prototype.hasOwnProperty.call(this.status, socketId)) {
+      delete this.status[socketId];
+    }
+  }
+
+  removeSocket(socketId: number | string) {
+    super.removeSocket(socketId);
+    this.removeStatus(socketId);
+  }
+
   getStatus() {
     const payload = {free_judger: []};
     for (let i in this.status) {
