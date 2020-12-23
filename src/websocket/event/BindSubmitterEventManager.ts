@@ -15,6 +15,7 @@ class BindSubmitterEventManager extends BindTypeEventManager {
   bindEvents(socket: ISocket) {
     this.bindStatusEvent(socket);
     this.bindSubmissionEvent(socket);
+    this.bindDisconnectEvent(socket);
     this.register(socket);
   }
 
@@ -34,6 +35,12 @@ class BindSubmitterEventManager extends BindTypeEventManager {
       Submitter.setSocket(solutionId, socket);
       const judgerSocket = Judger.getRandomSocket();
       judgerSocket.emit('submission', payload);
+    });
+  }
+
+  bindDisconnectEvent(socket: ISocket) {
+    socket.on('disconnect', async () => {
+      this.removeSocket(Submitter, socket.socketId);
     });
   }
 }
