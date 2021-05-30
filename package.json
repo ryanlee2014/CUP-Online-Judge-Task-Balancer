@@ -62,7 +62,7 @@
     "socket.io": "^2.3.0",
     "tinyqueue": "^2.0.3",
     "uuid": "^7.0.3",
-    "ws": "^7.2.3"
+    "ws": "^7.4.6"
   },
   "devDependencies": {
     "@bitjson/npm-scripts-info": "^1.0.0",
